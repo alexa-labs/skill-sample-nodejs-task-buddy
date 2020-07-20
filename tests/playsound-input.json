@@ -1,0 +1,36 @@
+{
+	"version": "1.0",
+	"session": {
+		"new": true,
+		"sessionId": "amzn1.echo-api.session.aaf7b112-434c-11e7-2563-6bbd1672c748",
+		"application": {
+			"applicationId": "amzn1.ask.skill.421a75f9-dde0-46c5-a625-c08155abbd6f"
+		},
+		"user": {
+			"userId": "amzn1.ask.account.12345ABCDEFGH"
+		}
+	},
+	"context": {
+		"System": {
+			"application": {
+				"applicationId": "amzn1.ask.skill.421a75f9-dde0-46c5-a625-c08155abbd6f"
+			},
+			"user": {
+				"userId": "amzn1.ask.account.12345ABCDEFGH"
+			}
+		}
+	},
+	"request": {
+		"type": "LaunchRequest",
+		"requestId": "amzn1.echo-api.request.da528275-5aa6-4f69-8038-06efc94d1923",
+		"timestamp": "2020-01-29T23:11:48Z",
+		"locale": "en-US",
+		"task": {
+			"name": "amzn1.ask.skill.421a75f9-dde0-46c5-a625-c08155abbd6f.PlaySound",
+			"version": "1",
+			"input": {
+				"soundCategory": "bird"
+			}
+		}
+	}
+}

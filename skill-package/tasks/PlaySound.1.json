@@ -1,0 +1,94 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "A Custom Task to stream a long form audio or play animal sound",
+		"version": "1",
+		"x-amzn-alexa-access-scope": "public",
+		"x-amzn-display-details": {
+			"en-US": {
+				"title": "A Custom Task to stream a long form audio or play animal sound"
+			},
+			"en-GB": {
+				"title": "A Custom Task to stream a long form audio or play animal sound"
+			}
+		}
+	},
+	"tags": [
+		{
+			"name": "play sound"
+		}
+	],
+	"paths": {
+		"/PlaySound": {
+			"summary": "play sound",
+			"description": "To start a play sound",
+			"post": {
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Input"
+							},
+							"examples": {
+								"playSoundExample": {
+									"summary": "Example input for play sound.",
+									"description": "The example inputs are used for validation of the task",
+									"value": {
+										"soundCategory": "ocean"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "When the play sound finishes successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SuccessfulResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "When the given parameters fail validations - e.g. not supported status type"
+					},
+					"500": {
+						"description": "When the play sound fails"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Input": {
+				"type": "object",
+				"properties": {
+					"soundCategory": {
+						"type": "string",
+						"x-amzn-display-details": {
+							"en-US": {
+								"name": "Sound Category"
+							},
+							"en-GB": {
+								"name": "Sound Category"
+							}
+						}
+					}
+				}
+			},
+			"SuccessfulResponse": {
+				"type": "object",
+				"properties": {
+					"endTime": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			}
+		}
+	}
+}

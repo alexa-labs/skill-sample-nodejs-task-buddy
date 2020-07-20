@@ -1,0 +1,12 @@
+{
+	"task": {
+		"handler": "",
+		"request": "",
+		"name": "",
+		"version": "",
+		"task": "",
+		"params": [ "mother_day_special_deal", "mother's day", "15" ],
+		"contact": "alexa-engagement-sa@amazon.com",
+		"documentation": "https://developer.amazon.com/en-US/docs/alexa/custom-skills/implement-custom-tasks-in-your-skill.html"
+	}
+}

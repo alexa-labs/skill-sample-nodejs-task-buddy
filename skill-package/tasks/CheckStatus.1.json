@@ -1,0 +1,78 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "A Custom Task to initiate a skill connection to check status",
+		"version": "1",
+		"x-amzn-alexa-access-scope": "public"
+	},
+	"tags": [
+		{
+			"name": "check status"
+		}
+	],
+	"paths": {
+		"/CheckStatus": {
+			"summary": "check status",
+			"description": "To start a check status",
+			"post": {
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Input"
+							},
+							"examples": {
+								"checkTaxi": {
+									"summary": "Example input for checking task.",
+									"description": "The example inputs are used for validation of the task",
+									"value": {
+										"taskCategory": "taxi"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "When the check status finishes successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SuccessfulResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "When the given parameters fail validations."
+					},
+					"500": {
+						"description": "When the check status fails"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Input": {
+				"type": "object",
+				"properties": {
+					"taskCategory": {
+						"type": "string"
+					}
+				}
+			},
+			"SuccessfulResponse": {
+				"type": "object",
+				"properties": {
+					"endTime": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			}
+		}
+	}
+}

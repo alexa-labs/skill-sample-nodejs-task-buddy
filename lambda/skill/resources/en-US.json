@@ -1,0 +1,95 @@
+{
+ "strings": {
+  "skillName": "Task Buddy",
+  "launchMessage": "This is a developer sample. You can say set reminder, play sound, check status, or count down.",
+  "repromptMessage": "What else can I help you with?",
+  "helpMessageSSML": "<speak>The skill can perform tasks or launch connections to other skills <break strength=\"strong\"/>To start, just say set reminder, check status, play sound, or count down.</speak>",
+  "fallbackMessageSSML": "<speak>The skill can perform tasks or launch connections to other provider skills <break strength=\"strong\"/>What would you like to try?</speak>",
+  "errorMessage": "Sorry, I had trouble doing what you asked. Please try again.",
+  "sessionResumedMessage": "Welcome back to Task Buddy! You can say set reminder, play sound, check status, or count down.",
+  "cheerSoundSSMLAudio": "<audio src=\"soundbank://soundlibrary/human/amzn_sfx_large_crowd_cheer_02\"/>",
+  "checkingStatus": "Checking {taskCategory} status...initiating skill connection...",
+  "streamingAudio": "Streaming a long form audio.",
+  "goodbye": "Good bye",
+  "playingSoundSSML": "<speak>Here\"s a {soundCategory} sound. {sound} </speak>",
+  "speakOpenSSML": "<speak>",
+  "speakCloseSSML": "</speak>",
+  "initiatingCountDown": "initiating count down",
+  "campaignMessage": "Your campaign is {campaign}. You get {discount}% on all {category} items.",
+  "countDownCompleted": "count down complete",
+  "hiddenParamMessage": "The hidden a. 2. z. ref param is {hiddenParam}.",
+  "reminderTaskMessageSSML": "<speak>Reminder set for <say-as interpret-as=\"date\" format=\"dm\">{date}</say-as></speak>",
+  "createReminderErrorMessage": "There was an error creating the reminder. Please try again.",
+  "resumingMessage": "Resume streaming a long form audio now.",
+  "soundsSSMLAudio": {
+   "bird": [
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_bird_chickadee_chirp_1x_01\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_bird_chickadee_chirps_01\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_bird_forest_01\"/>"
+   ],
+   "cat": [
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_cat_angry_meow_1x_01\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_cat_angry_meow_1x_02\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_cat_long_meow_1x_01\"/>"
+   ],
+   "dog": [
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_dog_med_bark_1x_01\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_dog_med_bark_1x_02\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_dog_med_bark_1x_03\"/>"
+   ],
+   "bear": [
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_bear_groan_roar_01\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_bear_roar_grumble_01\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_bear_roar_small_01\"/>"
+   ],
+   "sheep": [
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_sheep_bleat_01\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_sheep_bleat_02\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_sheep_bleat_03\"/>"
+   ],
+   "wolf": [
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_wolf_howl_01\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_wolf_howl_03\"/>",
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_wolf_young_howl_01\"/>"
+   ],
+   "ocean": [
+    "<audio src=\"soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01\"/>",
+    "<audio src=\"soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_02\"/>",
+    "<audio src=\"soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_on_rocks_1x_01\"/>"
+   ],
+   "horse": [
+    "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_horse_gallop_4x_02\"/>"
+   ]
+  },
+  "animalImages": {
+   "bird": "https://aplsnippets.s3.amazonaws.com/assets/images/bird.jpeg",
+   "cat": "https://aplsnippets.s3.amazonaws.com/assets/images/cat01_1200.jpg",
+   "dog": "https://aplsnippets.s3.amazonaws.com/assets/images/dog01_1200.jpg",
+   "bear": "https://aplsnippets.s3.amazonaws.com/assets/images/bear.jpg",
+   "sheep": "https://aplsnippets.s3.amazonaws.com/assets/images/sheep.jpg",
+   "wolf": "https://aplsnippets.s3.amazonaws.com/assets/images/wolf.jpg",
+   "horse": "https://aplsnippets.s3.amazonaws.com/assets/images/horse.jpg"
+  },
+  "taskImages": {
+   "runningWater": "https://aplsnippets.s3.amazonaws.com/assets/images/running_water.jpg",
+   "motherDayDeal": "https://aplsnippets.s3.amazonaws.com/assets/images/mothers_day_deals.jpg",
+   "countDown": "https://aplsnippets.s3.amazonaws.com/assets/images/countdown.jpg",
+   "task": "https://aplsnippets.s3.amazonaws.com/assets/images/task.png"
+  },
+  "reminderMessage": "<speak>Setting reminder for 20 seconds from now.</speak>",
+  "reminderText": "Task Buddy: It\"s time to grab coffee and take a walk!",
+  "reminderSSML": "<speak>It\"s time to grab coffee and take a walk!</speak>",
+  "reminderDenied": "What else can I help you with?",
+  "reminderNotAnswered": "Sorry, I need your permissions to create reminders.",
+  "reminderConsentCardMessage": "We need you to enable reminders. I just sent the request to your alexa app.",
+  "aplDocs": {
+   "launchAttribution": "../apl-docs/en.launch-attribution.json",
+   "properties": "../apl-docs/en.properties.json"
+  },
+  "aplData": {
+   "launchAttribution": "../apl-datasources/en.launch-attribution.json",
+   "customTask": "../apl-datasources/en.custom-task.json"
+  }
+ },
+ "sounds": {}
+}

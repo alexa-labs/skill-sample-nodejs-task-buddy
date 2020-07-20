@@ -1,0 +1,122 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "task buddy",
+            "modelConfiguration": {
+                "fallbackIntentSensitivity": {
+                    "level": "LOW"
+                }
+            },
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "CheckStatusIntent",
+                    "slots": [],
+                    "samples": [
+                        "status",
+                        "show status",
+                        "checking status",
+                        "check status"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "PlaySoundIntent",
+                    "slots": [],
+                    "samples": [
+                        "play audio",
+                        "sound",
+                        "play sound",
+                        "playsound"
+                    ]
+                },
+                {
+                    "name": "CountDownIntent",
+                    "slots": [],
+                    "samples": [
+                        "countdown",
+                        "count down"
+                    ]
+                },
+                {
+                    "name": "AMAZON.PauseIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ResumeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "SetReminderIntent",
+                    "slots": [],
+                    "samples": [
+                        "reminder",
+                        "remind me",
+                        "create reminder",
+                        "set reminder"
+                    ]
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "TestTaskUsingVoiceIntent",
+                    "slots": [
+                        {
+                            "name": "TaskName",
+                            "type": "TaskNameSlotType"
+                        }
+                    ],
+                    "samples": [
+                        "Debug {TaskName}",
+                        "Test {TaskName}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "TaskNameSlotType",
+                    "values": [
+                        {
+                            "id": "campaign",
+                            "name": {
+                                "value": "campaign",
+                                "synonyms": [
+                                    "hidden",
+                                    "track marketing",
+                                    "campaigns",
+                                    "a. z. ref",
+                                    "marketing"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "reminder",
+                            "name": {
+                                "value": "reminder",
+                                "synonyms": [
+                                    "reminders"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

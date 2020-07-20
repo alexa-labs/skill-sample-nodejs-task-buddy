@@ -1,0 +1,201 @@
+{
+	"type": "APL",
+	"version": "1.3",
+	"theme": "dark",
+	"import": [
+		{
+			"name": "alexa-layouts",
+			"version": "1.1.0"
+		}
+	],
+	"resources": [
+		{
+			"when": "${@viewportShape == @viewportShapeRound}",
+			"dimensions": {
+				"marginLeft": "50dp",
+				"nvpLabelWidth": "30vw",
+				"nvpLabelFontSize": "@fontSizeSmall"
+			},
+			"strings": {
+				"viewportHeightString": "Height",
+				"viewportWidthString": "Width"
+			}
+		},
+		{
+			"when": "${@viewportShape != @viewportShapeRound}",
+			"dimensions": {
+				"marginLeft": "30dp",
+				"nvpLabelWidth": "38vw",
+				"contentWidth": "60vw",
+				"nvpLabelFontSize": "@fontSizeMedium",
+				"smallFont": "25dp"
+			},
+			"strings": {
+				"viewportHeightString": "viewportHeight",
+				"viewportWidthString": "viewportWidth"
+			}
+		}
+	],
+	"styles": {
+		"nvpLabelStyle": {
+			"extend": "textStyleBody",
+			"values": [
+				{
+					"paddingLeft": "@marginLeft",
+					"color": "gray",
+					"fontSize": "@nvpLabelFontSize",
+					"maxLines": 1
+				}
+			]
+		},
+		"nvpValueStyle": {
+			"extend": "textStyleBody",
+			"values": [
+				{
+					"paddingLeft": "@marginLeft",
+					"color": "gray"
+				}
+			]
+		}
+	},
+	"layouts": {
+		"nameValuePairLayout": {
+			"parameters": [
+				{
+					"name": "labelText",
+					"type": "string"
+				},
+				{
+					"name": "valueText",
+					"type": "string"
+				},
+				{
+					"name": "labelTextStyle",
+					"type": "string",
+					"default": "nvpLabelStyle"
+				},
+				{
+					"name": "valueTextStyle",
+					"type": "string",
+					"default": "textStyleBody"
+				}
+			],
+			"items": [
+				{
+					"type": "Container",
+					"spacing": 10,
+					"direction": "row",
+					"items": [
+						{
+							"type": "Text",
+							"text": "${labelText}",
+							"style": "${labelTextStyle}",
+							"maxLines": 1,
+							"width": "@nvpLabelWidth",
+							"paddingLeft": "@marginLeft",
+							"fontSize": "@smallFont"
+						},
+						{
+							"type": "Text",
+							"text": "${valueText}",
+							"style": "${valueTextStyle}",
+							"paddingLeft": "@marginLeft",
+							"width": "@contentWidth",
+							"fontSize": "@smallFont"
+						}
+					]
+				}
+			]
+		}
+	},
+	"mainTemplate": {
+		"parameters": [ "payload" ],
+		"items": [
+			{
+				"type": "Container",
+				"height": "100vh",
+				"items": [
+					{
+						"type": "AlexaBackground"
+					},
+					{
+						"type": "AlexaHeader",
+						"headerTitle": "TASK BUDDY",
+						"headerBackButton": false,
+						"headerAttributionImage": "https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/docs/ux/branding/mark1._TTH_.png"
+					},
+					{
+						"type": "ScrollView",						
+						"height": "100vh",
+						"item": {
+							"type": "Container",
+							"justifyContent": "${@viewportShape == @viewportShapeRound ? 'center' : 'start'}",
+							"items": [
+								{
+									"type": "Image",
+									"width": "100%",
+									"height": "60vh",
+									"source": "${payload.task.image}"
+								},
+								{
+									"type": "Text",
+									"text": "Nice! Your marketing campaign with id: ${payload.task.params[0]} targeting ${payload.task.params[1]} with a ${payload.task.params[2]} discount just got 1 click!",
+									"style": "${valueTextStyle}",
+									"paddingLeft": "@marginLeft",
+									"width": "100vw",
+									"fontSize": "30dp",
+									"align": "center"
+								},
+								{
+									"type": "nameValuePairLayout",
+									"labelText": "Handler",
+									"valueText": "${payload.task.handler}"
+								},
+								{
+									"type": "nameValuePairLayout",
+									"when": "${payload.task.params != ''}",
+									"labelText": "Param One",
+									"valueText": "${payload.task.params[0]}"
+								},
+								{
+									"type": "nameValuePairLayout",
+									"when": "${payload.task.params != ''}",
+									"labelText": "Param Two",
+									"valueText": "${payload.task.params[1]}"
+								},
+								{
+									"type": "nameValuePairLayout",
+									"when": "${payload.task.params != ''}",
+									"labelText": "Param Three",
+									"valueText": "${payload.task.params[2]}"
+								},
+								{
+									"type": "nameValuePairLayout",
+									"when": "${payload.task.task != ''}",
+									"labelText": "Task Object",
+									"valueText": "${payload.task.task}"
+								},
+								{
+									"type": "nameValuePairLayout",
+									"labelText": "Contact Us:",
+									"valueText": "${payload.task.contact}"
+								},
+								{
+									"type": "nameValuePairLayout",
+									"labelText": "More Documentation:",
+									"valueText": "${payload.task.documentation}"
+								}, 
+								{
+									"description" : "buffer space near bottom for easier scrolling and reading", 
+									"type": "Frame" , 
+									"minHeight" : "25vh" , 
+									"backgroundColor" : "transparent" 								 
+								}
+							]
+						}
+					}
+				]
+			}
+		]
+	}
+}

@@ -1,0 +1,90 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "A Custom Task to track marketing taggings",
+		"version": "1",
+		"x-amzn-alexa-access-scope": "public"
+	},
+	"tags": [
+		{
+			"name": "TrackMarketing"
+		}
+	],
+	"paths": {
+		"/TrackMarketing": {
+			"summary": "TrackMarketing",
+			"description": "To start a TrackMarketing",
+			"post": {
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Input"
+							},
+							"examples": {
+								"trackMarketingExample": {
+									"summary": "Example input for marketing attribution.",
+									"description": "The example inputs are used for validation of the task",
+									"value": {
+										"paramOne": "prime_day_special_deal",
+										"paramTwo": "prime_day",
+										"paramThree": 15,
+										"a2z_ref": "google_paid_search_campaign"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "When the TrackMarketing finishes successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SuccessfulResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "When the given parameters fail validations - e.g. not supported status type"
+					},
+					"500": {
+						"description": "When the TrackMarketing fails"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Input": {
+				"type": "object",
+				"properties": {
+					"paramOne": {
+						"type": "string"
+					},
+					"paramTwo": {
+						"type": "string"
+					},
+					"paramThree": {
+						"type": "string"
+					},
+					"a2z_ref": {
+						"type": "string"
+					}
+				}
+			},
+			"SuccessfulResponse": {
+				"type": "object",
+				"properties": {
+					"endTime": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			}
+		}
+	}
+}

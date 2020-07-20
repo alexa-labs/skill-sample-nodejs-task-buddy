@@ -1,0 +1,125 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "name": "Task Buddy",
+          "summary": "Task Buddy is a Alexa skill sample which can play a sound, count down, or launch skill connections to request other provider skills to perform tasks.",
+          "description": "This is a skill sample for Alexa developers.\n\nAs a provider skill, Task Buddy supports a few custom tasks such as PlaySound, CountDown and CheckStatus.\n\nAs a requester skill, Task Buddy can also initiate Skill Connections to request other provider skills to perform custom tasks via CheckStatus.\n\nLearn more about Skill Connections: https://developer.amazon.com/en-US/docs/alexa/custom-skills/understand-skill-connections.html",
+          "examplePhrases": [
+            "Alexa, open Task Buddy"
+          ],
+          "smallIconUri": "https://aplsnippets.s3.amazonaws.com/assets/images/en-US_smallIcon.png",
+          "largeIconUri": "https://aplsnippets.s3.amazonaws.com/assets/images/en-US_largeIcon.png",
+          "keywords": [
+            "task",
+            "tasks",
+            "custom task"
+          ]
+        }
+      },
+      "isAvailableWorldwide": false,
+      "testingInstructions": "Say 'Alexa, open Task Buddy'",
+      "category": "KNOWLEDGE_AND_TRIVIA",
+      "distributionCountries": [
+        "US"
+      ]
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda",
+          "uri": "ask-custom-task-buddy"
+        },
+        "tasks": [
+          {
+            "name": "CountDown",
+            "version": "1"
+          },
+          {
+            "name": "CheckStatus",
+            "version": "1"
+          },
+          {
+            "name": "PlaySound",
+            "version": "1"
+          },
+          {
+            "name": "TrackMarketing",
+            "version": "1"
+          },
+          {
+            "name": "SetReminder",
+            "version": "1"
+          }
+        ],
+        "interfaces": [
+          {
+            "type": "AUDIO_PLAYER"
+          },
+          {
+            "type": "ALEXA_PRESENTATION_APL",
+            "supportedViewports": [
+              {
+                "mode": "HUB",
+                "shape": "ROUND",
+                "minWidth": 480,
+                "maxWidth": 480,
+                "minHeight": 480,
+                "maxHeight": 480
+              },
+              {
+                "mode": "HUB",
+                "shape": "RECTANGLE",
+                "minWidth": 1024,
+                "maxWidth": 1024,
+                "minHeight": 600,
+                "maxHeight": 600
+              },
+              {
+                "mode": "HUB",
+                "shape": "RECTANGLE",
+                "minWidth": 1280,
+                "maxWidth": 1280,
+                "minHeight": 800,
+                "maxHeight": 800
+              },
+              {
+                "mode": "TV",
+                "shape": "RECTANGLE",
+                "minWidth": 960,
+                "maxWidth": 960,
+                "minHeight": 540,
+                "maxHeight": 540
+              },
+              {
+                "mode": "HUB",
+                "shape": "RECTANGLE",
+                "minWidth": 960,
+                "maxWidth": 960,
+                "minHeight": 480,
+                "maxHeight": 480
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "permissions": [
+      {
+        "name": "alexa::alerts:reminders:skill:readwrite"
+      }
+    ],
+    "manifestVersion": "1.0",
+    "privacyAndCompliance": {
+      "locales": {
+        "en-US": {}
+      },
+      "allowsPurchases": false,
+      "usesPersonalInfo": false,
+      "isChildDirected": false,
+      "isExportCompliant": true,
+      "containsAds": false
+    }
+  }
+}

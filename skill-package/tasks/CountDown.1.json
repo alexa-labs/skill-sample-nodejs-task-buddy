@@ -1,0 +1,86 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "A Custom Task to perform a count down",
+		"version": "1",
+		"x-amzn-alexa-access-scope": "public"
+	},
+	"tags": [
+		{
+			"name": "count down"
+		}
+	],
+	"paths": {
+		"/CountDown": {
+			"summary": "Count Down",
+			"description": "To start a count down",
+			"post": {
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Input"
+							},
+							"examples": {
+								"countDownExample": {
+									"summary": "Example input for countdown.",
+									"description": "The example inputs are used for validation of the task",
+									"value": {
+										"upperLimit": 10,
+										"lowerLimit": 1
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "When the count down finishes successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SuccessfulResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "When the given parameters fail validations - e.g. lowerLimit cannot be higher than upperLimit"
+					},
+					"500": {
+						"description": "When the count down fails"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Input": {
+				"type": "object",
+				"properties": {
+					"upperLimit": {
+						"type": "number",
+						"maximum": 100,
+						"minimum": 1
+					},
+					"lowerLimit": {
+						"type": "number",
+						"maximum": 100,
+						"minimum": 1
+					}
+				}
+			},
+			"SuccessfulResponse": {
+				"type": "object",
+				"properties": {
+					"endTime": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			}
+		}
+	}
+}

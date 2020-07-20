@@ -1,0 +1,128 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "title": "A Custom Task to create Alexa Reminder",
+  "version": "1",
+  "x-amzn-alexa-access-scope": "public",
+  "x-amzn-display-details": {
+   "en-US": {
+    "title": "A Custom Task to create Alexa Reminder"
+   },
+   "en-GB": {
+    "title": "A Custom Task to create Alexa Reminder"
+   }
+  }
+ },
+ "tags": [
+  {
+   "name": "set reminder"
+  }
+ ],
+ "paths": {
+  "/SetReminder": {
+   "summary": "set reminder",
+   "description": "To set a reminder",
+   "post": {
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/Input"
+       },
+       "examples": {
+        "setReminderExample": {
+         "summary": "Example input for setting reminder.",
+         "description": "The example inputs are used for validation of the task",
+         "value": {
+          "text": "time_to_grab_coffee_and_take_a_walk",
+          "freq": "Daily"
+         }
+        }
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "When the set reminder finishes successfully",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SuccessfulResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "When the given parameters fail validations - e.g. not supported status type"
+     },
+     "500": {
+      "description": "When the set reminder fails"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "Input": {
+    "type": "object",
+    "properties": {
+     "text": {
+      "type": "string",
+      "x-amzn-display-details": {
+       "en-US": {
+        "name": "Text"
+       },
+       "en-GB": {
+        "name": "Text"
+       }
+      }
+     },
+     "scheduledTime": {
+      "type": "string",
+      "x-amzn-display-details": {
+       "en-US": {
+        "name": "Scheduled Time"
+       },
+       "en-GB": {
+        "name": "Scheduled Time"
+       }
+      }
+     },
+     "freq": {
+      "type": "string",
+      "x-amzn-display-details": {
+       "en-US": {
+        "name": "Frequency"
+       },
+       "en-GB": {
+        "name": "Frequency"
+       }
+      }
+     },
+     "a2z_ref": {
+      "type": "string",
+      "x-amzn-display-details": {
+       "en-US": {
+        "name": "A2Z Reference"
+       },
+       "en-GB": {
+        "name": "A2Z Reference"
+       }
+      }
+     }
+    }
+   },
+   "SuccessfulResponse": {
+    "type": "object",
+    "properties": {
+     "endTime": {
+      "type": "string",
+      "format": "date-time"
+     }
+    }
+   }
+  }
+ }
+}
