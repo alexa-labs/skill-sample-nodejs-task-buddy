@@ -74,7 +74,7 @@ const CheckStatusTaskHandler = {
     return responseBuilder
       .speak(speakOutput)
       .addDirective(connectionDirective)
-      .withShouldEndSession(undefined)
+      .withShouldEndSession(undefined) //explicitly flag as undefined when returning any Directives
       .getResponse();
   },
 };
@@ -94,6 +94,7 @@ const TrackMarketingTaskHandler = {
   handle(handlerInput) {
     const { responseBuilder } = handlerInput;
     const { task } = handlerInput.requestEnvelope.request;
+    const repromptOutput = responseBuilder.i18n.s('repromptMessage');
     const paramOne = Utils.getTaskParam(task.input.paramOne, 'amazon_prime_day_special');
     const paramTwo = Utils.getTaskParam(task.input.paramTwo, 'amazon_prime_day');
     const paramThree = Utils.getTaskParam(task.input.paramThree, '15');
@@ -110,6 +111,7 @@ const TrackMarketingTaskHandler = {
 
     return responseBuilder
       .speak(speakOutput)
+      .reprompt(repromptOutput)
       .getResponse();
   },
 };
@@ -141,8 +143,8 @@ const PlaySoundTaskHandler = {
       responseBuilder
         .addDirective(AudioPlayer.longFormAudio);
     } else {
-      const sound = Utils.getRandomString(responseBuilder.i18n.s('soundsSSMLAudio')[soundCategory] || responseBuilder.i18n.s('soundsSSMLAudio').ocean);
-      speakOutput = Utils.stringFormat(responseBuilder.i18n.s('playingSound'), { category: soundCategory, sound });
+      const sound = Utils.getRandomString(responseBuilder.i18n.obj('soundsSSMLAudio')[soundCategory] || responseBuilder.i18n.obj('soundsSSMLAudio').ocean);
+      speakOutput = Utils.stringFormat(responseBuilder.i18n.s('playingSoundSSML'), { soundCategory, sound });
     }
 
     VisualInterface.appendAPLDirective(handlerInput, TaskHandlerNames.PlaySound);
@@ -169,6 +171,7 @@ const CountDownTaskHandler = {
   handle(handlerInput) {
     const { responseBuilder } = handlerInput;
     const { task } = handlerInput.requestEnvelope.request;
+    const repromptOutput = responseBuilder.i18n.s('repromptMessage');
 
     // generates {<speak> initiating countdown <audio .../>
     let speakOutput = `${responseBuilder.i18n.s('speakOpenSSML')} ${responseBuilder.i18n.s('initiatingCountDown')} ${responseBuilder.i18n.s('cheerSoundSSMLAudio')}`;
@@ -191,7 +194,7 @@ const CountDownTaskHandler = {
 
     return responseBuilder
       .speak(speakOutput)
-      .withShouldEndSession(undefined)
+      .reprompt(repromptOutput)
       .getResponse();
   },
 };

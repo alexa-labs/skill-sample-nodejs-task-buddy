@@ -11,7 +11,7 @@
   "checkingStatus": "Checking {taskCategory} status...initiating skill connection...",
   "streamingAudio": "Streaming a long form audio.",
   "goodbye": "Good bye",
-  "playingSoundSSML": "<speak>Here\"s a {soundCategory} sound. {sound} </speak>",
+  "playingSoundSSML": "<speak>Here's a {soundCategory} sound. {sound} </speak>",
   "speakOpenSSML": "<speak>",
   "speakCloseSSML": "</speak>",
   "initiatingCountDown": "initiating count down",
@@ -21,6 +21,14 @@
   "reminderTaskMessageSSML": "<speak>Reminder set for <say-as interpret-as=\"date\" format=\"dm\">{date}</say-as></speak>",
   "createReminderErrorMessage": "There was an error creating the reminder. Please try again.",
   "resumingMessage": "Resume streaming a long form audio now.",
+  "reminderMessage": "<speak>Setting reminder for 20 seconds from now.</speak>",
+  "reminderText": "Task Buddy: It's time to grab coffee and take a walk!",
+  "reminderSSML": "<speak>It's time to grab coffee and take a walk!</speak>",
+  "reminderDenied": "What else can I help you with?",
+  "reminderNotAnswered": "Sorry, I need your permissions to create reminders.",
+  "reminderConsentCardMessage": "We need you to enable reminders. I just sent the request to your alexa app."
+ },
+ "objects": {
   "soundsSSMLAudio": {
    "bird": [
     "<audio src=\"soundbank://soundlibrary/animals/amzn_sfx_bird_chickadee_chirp_1x_01\"/>",
@@ -76,12 +84,6 @@
    "countDown": "https://aplsnippets.s3.amazonaws.com/assets/images/countdown.jpg",
    "task": "https://aplsnippets.s3.amazonaws.com/assets/images/task.png"
   },
-  "reminderMessage": "<speak>Setting reminder for 20 seconds from now.</speak>",
-  "reminderText": "Task Buddy: It\"s time to grab coffee and take a walk!",
-  "reminderSSML": "<speak>It\"s time to grab coffee and take a walk!</speak>",
-  "reminderDenied": "What else can I help you with?",
-  "reminderNotAnswered": "Sorry, I need your permissions to create reminders.",
-  "reminderConsentCardMessage": "We need you to enable reminders. I just sent the request to your alexa app.",
   "aplDocs": {
    "launchAttribution": "../apl-docs/en.launch-attribution.json",
    "properties": "../apl-docs/en.properties.json"

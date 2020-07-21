@@ -42,6 +42,25 @@ class I18nHelper {
     return resource;
   }
 
+  obj(name) {
+    let resource = null;
+    const hierarchical = name.split('.');
+    if (hierarchical.length === 1) {
+      resource = this.resources.objects[name];
+    } else if (hierarchical.length === 2) {
+      resource = this.resources.objects[hierarchical[0]][hierarchical[1]];
+    } else {
+      let resolved = this.resources.objects[hierarchical[0]];
+      for (let i = 1; i < hierarchical.length; i += 1) {
+        resolved = resolved[hierarchical[i]];
+      }
+      resource = resolved;
+    }
+
+    console.assert(resource !== null, `missing object: ${name}`);
+    return resource;
+  }
+
   get activeLocale() {
     return this.locale;
   }

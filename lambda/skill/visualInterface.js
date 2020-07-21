@@ -10,18 +10,18 @@ const { TaskHandlerNames } = require('../constants');
 function appendAPLDirective(handlerInput, handlerName) {
   if (Utils.supportsAPL(handlerInput)) {
     const { responseBuilder } = handlerInput;
-    const doc = responseBuilder.i18n.s('aplDocs').properties;
-    const datasource = responseBuilder.i18n.s('aplData').customTask;
+    const doc = responseBuilder.i18n.obj('aplDocs').properties;
+    const datasource = responseBuilder.i18n.obj('aplData').customTask;
     const aplDirective = Utils.createAPLDocDirective(doc, datasource);
 
     switch (handlerName) {
       case TaskHandlerNames.PlaySound:
-        aplDirective.datasources.task.image = responseBuilder.i18n.s('taskImages').runningWater;
+        aplDirective.datasources.task.image = responseBuilder.i18n.obj('taskImages').runningWater;
         break;
       case TaskHandlerNames.Campaign:
-        aplDirective.document = require(responseBuilder.i18n.s('aplDocs').launchAttribution);
-        aplDirective.datasources = require(responseBuilder.i18n.s('aplData').launchAttribution);
-        aplDirective.datasources.task.image = responseBuilder.i18n.s('taskImages').motherDayDeal;
+        aplDirective.document = require(responseBuilder.i18n.obj('aplDocs').launchAttribution);
+        aplDirective.datasources = require(responseBuilder.i18n.obj('aplData').launchAttribution);
+        aplDirective.datasources.task.image = responseBuilder.i18n.obj('taskImages').motherDayDeal;
         aplDirective.datasources.task.params = [
           handlerInput.requestEnvelope.request.task.input.paramOne,
           handlerInput.requestEnvelope.request.task.input.paramTwo,
@@ -29,10 +29,10 @@ function appendAPLDirective(handlerInput, handlerName) {
         ];
         break;
       case TaskHandlerNames.CountDown:
-        aplDirective.datasources.task.image = responseBuilder.i18n.s('taskImages').countDown;
+        aplDirective.datasources.task.image = responseBuilder.i18n.obj('taskImages').countDown;
         break;
       default:
-        aplDirective.datasources.task.image = responseBuilder.i18n.s('taskImages').task;
+        aplDirective.datasources.task.image = responseBuilder.i18n.obj('taskImages').task;
         break;
     }
 
