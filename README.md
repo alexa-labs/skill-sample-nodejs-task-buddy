@@ -1,7 +1,7 @@
 # Task Buddy
 This sample skill demonstrates how to use Alexa Skill Links to launch skill or custom tasks from anywhere in the web or mobile.
 
-Throughout this sample, you will learn how to create a skill called Task Buddy which implments a number of Custom Tasks, and how to construct web links with input parameters to access the skill. These Alexa features will enable you to create additional skill functionalities that can be accessed from users anywhere in the web or mobile, and allow you to confidently scale up your user acquisition efforts by providing the tools to properly track marketing attributions.
+Throughout this sample, you will learn how to create a skill called Task Buddy which implments a number of [Custom Tasks](https://developer.amazon.com/en-US/docs/alexa/custom-skills/implement-custom-tasks-in-your-skill.html), and how to construct [Alexa Quick Links](https://developer.integ.amazon.com/en-US/docs/alexa/custom-skills/create-a-quick-link-for-your-skill.html) with input parameters to access the skill. These Alexa features will enable you to create additional skill functionalities that can be accessed from users anywhere in the web or mobile, and allow you to confidently scale up your user acquisition efforts by providing the tools to properly track marketing attributions.
 
 ## Try It
 You can try out a published version of this skill sample using the following pre-constructed links:
@@ -22,11 +22,11 @@ You can try out a published version of this skill sample using the following pre
 
 **1. Clone this repo**
 ```
-$ git clone https://github.com/chandlerjwang/task-buddy
+$ git clone https://github.com/alexa-labs/skill-sample-nodejs-task-buddy
 ```
 **2. Change directory to the root of the project**
 ```
-$ cd task-buddy
+$ cd skill-sample-nodejs-task-buddy
 ```
 **3. Associate the project with your Alexa developer and AWS credentials**
 ```
@@ -36,13 +36,21 @@ $ ask configure
 ```
 $ ask deploy
 ```
-**5. Construct Web Links**
+**5. Test Your Custom Task handler**
+```
+$ ask smapi invoke-skill-end-point -s <skill-id> -g development --endpoint-region=default --skill-request-body file:sample.json --debug
+```
+> **Note**: If Custom Tasks are implemented in your skill, please follow the detailed instructions in [tests folders](https://github.com/alexa-labs/skill-sample-nodejs-task-buddy/tree/master/tests) in order to test the endpoint with sample task payload.
+
+**6. Construct Alexa Quick Links**
 ```
 Modal Skill Launch: https://alexa-skills.amazon.com/apis/custom/skills/<SkillID>/launch
 Custom Task Launch: https://alexa-skills.amazon.com/apis/custom/skills/<SkillID>/tasks/<TaskName>/versions/1?param=test
 ```
+> **Note**: Alexa Quick Links only work with live version of your skill. Please make sure your skill is certified and published before accessing the links.
 
 ### Additional Documentation
 * [Implement Custom Tasks](https://developer.amazon.com/en-US/docs/alexa/custom-skills/implement-custom-tasks-in-your-skill.html) - A great resource for learning custom tasks.
-* [Alexa Links Tech Reference](https://developer.amazon.com/en-US/docs/alexa/custom-skills/implement-custom-tasks-in-your-skill.html)
-
+* [Alexa Quick Links - Custom Task Launch](https://developer.integ.amazon.com/en-US/docs/alexa/custom-skills/create-a-quick-link-for-your-custom-task.html) - Create a Quick Link for Your Custom Task.
+* [Alexa Quick Links - Skill Launch](https://developer.integ.amazon.com/en-US/docs/alexa/custom-skills/create-a-quick-link-for-your-skill.html) - Create a Quick Link for Your Custom Skill.
+* [Test Your Custom Task Handler](https://developer.amazon.com/en-US/docs/alexa/custom-skills/implement-custom-tasks-in-your-skill.html#add-test-examples-to-certify-your-task-definitions) - To invoke your task handler with sample payload
