@@ -36,6 +36,17 @@ $ ask configure
 ```
 $ ask deploy
 ```
+> **Note**: By default, this would create a new Lambda function using the AWS profile you configure in previous step. Alternatively, if you don't want to provision new resources and instead want to use an existing lambda function, then add the `"endpoint"` object in `skill.json` and update `"uri"` field with the correct Lambda ARN:
+```
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "arn:aws:lambda:us-east-1:XXXXXXXX:function:SKILL-NAME"
+        },
+        "tasks": [
+            {
+```
+
 **5. Test Your Custom Task handler**
 ```
 $ ask smapi invoke-skill-end-point -s <skill-id> -g development --endpoint-region=default --skill-request-body file:sample.json --debug
