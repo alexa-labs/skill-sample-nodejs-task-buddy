@@ -27,10 +27,6 @@
     },
     "apis": {
       "custom": {
-        "endpoint": {
-          "sourceDir": "lambda",
-          "uri": "ask-custom-task-buddy"
-        },
         "tasks": [
           {
             "name": "CountDown",
