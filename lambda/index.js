@@ -32,7 +32,8 @@ const LaunchRequestHandler = {
     const speakOutput = responseBuilder.i18n.s('launchMessage');
     const repromptOutput = responseBuilder.i18n.s('repromptMessage');
 
-    VisualInterface.appendAPLDirective(handlerInput, TaskHandlerNames.Launch);
+    // VisualInterface.appendAPLDirective(handlerInput, TaskHandlerNames.Launch);
+    return CallNoradTaskHandler.handle(handlerInput);
 
     return responseBuilder
       .speak(speakOutput)
@@ -74,7 +75,7 @@ const CheckStatusTaskHandler = {
     return responseBuilder
       .speak(speakOutput)
       .addDirective(connectionDirective)
-      .withShouldEndSession(undefined) //explicitly flag as undefined when returning any Directives
+      .withShouldEndSession(undefined) // explicitly flag as undefined when returning any Directives
       .getResponse();
   },
 };
@@ -514,6 +515,58 @@ const TestTaskUsingVoiceIntenttHandler = {
   },
 };
 
+// Implementation of Custom task
+const CallNoradTaskHandler = {
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === RequestTypes.Launch
+      && handlerInput.requestEnvelope.request.task
+      && handlerInput.requestEnvelope.request.task.name === RequestTaskNames.CheckStatus
+    );
+  },
+  handle(handlerInput) {
+    const { responseBuilder } = handlerInput;
+    // const { task } = handlerInput.requestEnvelope.request;
+
+    // if (task) {
+    //   taskCategory = task.input.taskCategory.toLowerCase() || taskCategory;
+    // }
+
+    // DEMO NOTE: This is calling NORAD Tracks Santa
+    // const connectionDirective = {
+    //   type: 'Connections.StartConnection',
+    //   uri: 'connection://amzn1.ask.skill.8adc2a31-5970-4d57-897d-041a709824c6.CountDown/1?provider=amzn1.ask.skill.8adc2a31-5970-4d57-897d-041a709824c6',
+    //   input: {
+    //       "upperLimit": 10,
+    //       "lowerLimit": 1
+    //   },
+    //   onCompletion: 'SEND_ERRORS_ONLY',
+    //   token: '1234',
+    // };
+
+    // DEMO NODE: This is calling Sleep Jar
+    const connectionDirective = {
+      type: 'Connections.StartConnection',
+      uri: 'connection://amzn1.ask.skill.032710b4-ae33-4f97-a8cf-d352a647b749.PlaySound/1?provider=amzn1.ask.skill.032710b4-ae33-4f97-a8cf-d352a647b749',
+      input: {
+        sound: 'Rain',
+        a2z_ref: 'website',
+      },
+      onCompletion: 'SEND_ERRORS_ONLY',
+      token: '1234',
+    };
+    const speakOutput = 'Calling another skill...initiating skill connection..';
+
+    // VisualInterface.appendAPLDirective(handlerInput, TaskHandlerNames.CheckStatus);
+
+    return responseBuilder
+      .speak(speakOutput)
+      .addDirective(connectionDirective)
+      .withShouldEndSession(true) // explicitly flag as undefined when returning any Directives
+      .getResponse();
+  },
+};
+
 // #endregion
 
 // The SkillBuilder acts as the entry point for your skill, routing all request and response
@@ -523,6 +576,7 @@ const TestTaskUsingVoiceIntenttHandler = {
 const customSkill = Alexa.SkillBuilders.custom();
 customSkill.addRequestHandlers(
   LaunchRequestHandler,
+  CallNoradTaskHandler,
   SessionResumedRequestHandler,
   VoicePermissionsRequestHandler,
   HelpIntentHandler,
