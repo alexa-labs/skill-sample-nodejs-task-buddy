@@ -31,6 +31,12 @@ function appendAPLDirective(handlerInput, handlerName) {
       case TaskHandlerNames.CountDown:
         aplDirective.datasources.task.image = responseBuilder.i18n.obj('taskImages').countDown;
         break;
+      case 'StillHereIntent':
+        aplDirective.datasources.task.image = responseBuilder.i18n.obj('taskImages').stillhere;
+        aplDirective.datasources.task.params = [
+          'Still Here',
+        ];
+        break;
       default:
         aplDirective.datasources.task.image = responseBuilder.i18n.obj('taskImages').task;
         break;

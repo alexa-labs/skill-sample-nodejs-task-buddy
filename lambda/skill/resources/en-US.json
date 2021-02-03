@@ -105,7 +105,8 @@
    "runningWater": "https://aplsnippets.s3.amazonaws.com/assets/images/running_water.jpg",
    "motherDayDeal": "https://aplsnippets.s3.amazonaws.com/assets/images/mothers_day_deals.jpg",
    "countDown": "https://aplsnippets.s3.amazonaws.com/assets/images/countdown.jpg",
-   "task": "https://aplsnippets.s3.amazonaws.com/assets/images/task.png"
+   "task": "https://aplsnippets.s3.amazonaws.com/assets/images/task.png",
+   "stillhere": "https://aplsnippets.s3.amazonaws.com/assets/images/stillhere.jpg"
   },
   "aplDocs": {
    "launchAttribution": "../apl-docs/en.launch-attribution.json",

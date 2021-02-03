@@ -20,8 +20,8 @@ const TIMERS_VOICE_PERMISSION = {
 // Functions
 function getAnnouceTimer(duration) {
   return {
-    duration: `PT${duration}S`, // ISO-8601 representation of duration
-    timerLabel: `${duration} Second Annouce`,
+    duration, // ISO-8601 representation of duration
+    timerLabel: `${duration} Annouce`,
     creationBehavior: {
       displayExperience: {
         visibility: 'VISIBLE',
@@ -32,7 +32,7 @@ function getAnnouceTimer(duration) {
         type: 'ANNOUNCE',
         textToAnnounce: [{
           locale: 'en-US',
-          text: 'That was your timer!',
+          text: 'That was your skill created timer!',
         }],
       },
       notificationConfig: {
@@ -44,8 +44,8 @@ function getAnnouceTimer(duration) {
 
 function getNotifyOnlyTimer(duration) {
   return {
-    duration: `PT${duration}S`, // ISO-8601 representation of duration
-    timerLabel: `${duration} Second Notify Only`,
+    duration, // ISO-8601 representation of duration
+    timerLabel: `${duration} Notify Only`,
     creationBehavior: {
       displayExperience: {
         visibility: 'VISIBLE',
@@ -71,10 +71,10 @@ const SetTimerIntentHandler = {
   async handle(handlerInput) {
     const { requestEnvelope, attributesManager, serviceClientFactory } = handlerInput;
     const localizer = handlerInput.responseBuilder.i18n;
-    const duration = Alexa.getSlotValue(requestEnvelope, 'duration') || 60;
+    const duration = Alexa.getSlotValue(requestEnvelope, 'duration') || 'PT45S'; // ISO-8601 representation of duration
 
-    // const timerRequest = getAnnouceTimer(duration);
-    const timerRequest = getNotifyOnlyTimer(duration);
+    const timerRequest = getAnnouceTimer(duration);
+    // const timerRequest = getNotifyOnlyTimer(duration);
 
     console.log(`About to create timer: ${JSON.stringify(timerRequest)}`);
 
