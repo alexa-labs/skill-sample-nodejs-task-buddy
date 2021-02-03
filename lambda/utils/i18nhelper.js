@@ -132,11 +132,14 @@ class I18nHelper {
 }
 
 function localeInterceptor(handlerInput) {
-  const locale = Alexa.getLocale(handlerInput.requestEnvelope);
-  const localizer = new I18nHelper(locale);
+  const locale = Alexa.getLocale(handlerInput.requestEnvelope) || 'en-US';
 
-  // eslint-disable-next-line no-param-reassign
-  handlerInput.responseBuilder.i18n = localizer;
+  if (locale) {
+    const localizer = new I18nHelper(locale);
+
+    // eslint-disable-next-line no-param-reassign
+    handlerInput.responseBuilder.i18n = localizer;
+  }
 }
 
 module.exports = {

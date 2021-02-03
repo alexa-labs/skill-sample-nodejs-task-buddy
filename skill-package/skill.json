@@ -104,6 +104,12 @@
     "permissions": [
       {
         "name": "alexa::alerts:reminders:skill:readwrite"
+      },
+      {
+        "name": "alexa::alerts:timers:skill:readwrite"
+      },
+      {
+        "name": "alexa::skill:resumption"
       }
     ],
     "manifestVersion": "1.0",

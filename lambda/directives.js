@@ -12,7 +12,7 @@ const SendRequest = Object.freeze(
         '@version': '1',
         permissionScope: 'alexa::alerts:reminders:skill:readwrite',
       },
-      token: '',
+      token: 'alexa_reminder_api',
     },
   },
 );

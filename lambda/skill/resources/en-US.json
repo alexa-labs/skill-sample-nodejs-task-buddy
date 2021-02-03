@@ -1,7 +1,7 @@
 {
  "strings": {
   "skillName": "Task Buddy",
-  "launchMessage": "This is a developer sample. You can say set reminder, play sound, check status, or count down.",
+  "launchMessage": "This is a developer sample. You can say set timer, set reminder, play sound, check status, or count down.",
   "repromptMessage": "What else can I help you with?",
   "helpMessageSSML": "<speak>The skill can perform tasks or launch connections to other skills <break strength=\"strong\"/>To start, just say set reminder, check status, play sound, or count down.</speak>",
   "fallbackMessageSSML": "<speak>The skill can perform tasks or launch connections to other provider skills <break strength=\"strong\"/>What would you like to try?</speak>",
@@ -26,7 +26,30 @@
   "reminderSSML": "<speak>It's time to grab coffee and take a walk!</speak>",
   "reminderDenied": "What else can I help you with?",
   "reminderNotAnswered": "Sorry, I need your permissions to create reminders.",
-  "reminderConsentCardMessage": "We need you to enable reminders. I just sent the request to your alexa app."
+  "reminderConsentCardMessage": "We need you to enable reminders. I just sent the request to your alexa app.",
+  "ANNOUNCEMENT_TIMER_TITLE_MSG": "My Announcement Timer",
+  "ANNOUNCEMENT_LOCALE_MSG": "en-US",
+  "ANNOUNCEMENT_TEXT_MSG": "That was your timer!",
+  "CREATE_TIMER_OK_MSG": "Your {duration} second timer is now running! You can also try, check my timer. pause my timer, resume my timer, or delete my timer. ",
+  "CREATE_TIMER_ERROR_MSG": "Failed to create the timer. Sorry! ",
+  "VOICE_PERMISSION_ACCEPTED": "You can now set a timer by saying, set a timer of, followed by the duration. ",
+  "VOICE_PERMISSION_DENIED": "We can't continue if you don't allow timers. Please try again later. ",
+  "VOICE_PERMISSION_ERROR": "There was an error enabling the permissions. Please try again later. ",
+  "PERMISSIONS_CARD_MSG": "I just sent you a card to the Alexa app to enable permissions for Timers. Please enable it and open the skill again! Bye",
+  "TIMER_COUNT_MSG": "You have {{count}} timer. ",
+  "LAST_TIMER_MSG": "Your last timer {{status}}. ",
+  "READ_TIMER_ERROR_MSG": "Failed to read the timer status. Sorry! ",
+  "DELETE_TIMER_OK_MSG": "Your timer has been deleted! If you want to create another one just say, set a timer of, followed by the duration. ",
+  "DELETE_TIMER_ERROR_MSG": "Failed to delete the timer. Sorry! ",
+  "PAUSE_TIMER_OK_MSG": "Your timers have been paused! If you want to resume them just say, resume my timers. ",
+  "PAUSE_TIMER_ERROR_MSG": "Failed to pause timers. Sorry! ",
+  "RESUME_TIMER_OK_MSG": "Your timers have been resumed! If you want to pause them just say, pause my timers. ",
+  "RESUME_TIMER_ERROR_MSG": "Failed to resume timers. Sorry! ",
+  "ON_TIMER_STATUS_MSG": " is running",
+  "OFF_TIMER_STATUS_MSG": " is off",
+  "PAUSED_TIMER_STATUS_MSG": " is paused",
+  "NO_TIMER_MSG": "You haven't set a timer. Try saying, set a timer. ",
+  "REPROMPT_MSG": "What else can I help you with?"
  },
  "objects": {
   "soundsSSMLAudio": {
