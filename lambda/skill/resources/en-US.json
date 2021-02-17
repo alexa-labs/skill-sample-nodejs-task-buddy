@@ -1,7 +1,7 @@
 {
  "strings": {
   "skillName": "Task Buddy",
-  "launchMessage": "This is a developer sample. You can say set timer, set reminder, play sound, check status, or count down.",
+  "launchMessage": "This is a developer sample. You can say start cooking, set reminder, play sound, check status, or count down.",
   "repromptMessage": "What else can I help you with?",
   "helpMessageSSML": "<speak>The skill can perform tasks or launch connections to other skills <break strength=\"strong\"/>To start, just say set reminder, check status, play sound, or count down.</speak>",
   "fallbackMessageSSML": "<speak>The skill can perform tasks or launch connections to other provider skills <break strength=\"strong\"/>What would you like to try?</speak>",
@@ -30,7 +30,7 @@
   "ANNOUNCEMENT_TIMER_TITLE_MSG": "My Announcement Timer",
   "ANNOUNCEMENT_LOCALE_MSG": "en-US",
   "ANNOUNCEMENT_TEXT_MSG": "That was your timer!",
-  "CREATE_TIMER_OK_MSG": "Your {duration} second timer is now running! You can also try, check my timer. pause my timer, resume my timer, or delete my timer. ",
+  "CREATE_TIMER_OK_MSG": "Your timer is now running! You can also try, check my timer. pause my timer, resume my timer, or delete my timer. ",
   "CREATE_TIMER_ERROR_MSG": "Failed to create the timer. Sorry! ",
   "VOICE_PERMISSION_ACCEPTED": "You can now set a timer by saying, set a timer of, followed by the duration. ",
   "VOICE_PERMISSION_DENIED": "We can't continue if you don't allow timers. Please try again later. ",

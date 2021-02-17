@@ -16,12 +16,15 @@ const TIMERS_VOICE_PERMISSION = {
   },
   token: 'for_alexa_timer_api',
 };
+// This is calling Amazon: Call Santa
+const providerSkillID = 'amzn1.ask.skill.421a75f9-dde0-46c5-a625-c08155abbd6f';
+const providerTaskName = 'CountDown';
 
 // Functions
 function getAnnouceTimer(duration) {
   return {
     duration, // ISO-8601 representation of duration
-    timerLabel: `${duration} Annouce`,
+    timerLabel: 'Cooking Churro',
     creationBehavior: {
       displayExperience: {
         visibility: 'VISIBLE',
@@ -32,7 +35,7 @@ function getAnnouceTimer(duration) {
         type: 'ANNOUNCE',
         textToAnnounce: [{
           locale: 'en-US',
-          text: 'That was your skill created timer!',
+          text: 'That was your churro recipe timer!',
         }],
       },
       notificationConfig: {
@@ -45,7 +48,7 @@ function getAnnouceTimer(duration) {
 function getNotifyOnlyTimer(duration) {
   return {
     duration, // ISO-8601 representation of duration
-    timerLabel: `${duration} Notify Only`,
+    timerLabel: 'Cooking Churro',
     creationBehavior: {
       displayExperience: {
         visibility: 'VISIBLE',
@@ -54,6 +57,40 @@ function getNotifyOnlyTimer(duration) {
     triggeringBehavior: {
       operation: {
         type: 'NOTIFY_ONLY',
+      },
+      notificationConfig: {
+        playAudible: true,
+      },
+    },
+  };
+}
+
+function getLaunchTaskTimer(duration) {
+  return {
+    duration, // ISO-8601 representation of duration
+    timerLabel: 'Cooking Disney Churro',
+    creationBehavior: {
+      displayExperience: {
+        visibility: 'VISIBLE',
+      },
+    },
+    triggeringBehavior: {
+      operation: {
+        type: 'LAUNCH_TASK',
+        textToConfirm: [
+          {
+            locale: 'en-US',
+            text: 'Your Cooking Disney Churro timer is up! Would you like to launch {continueWithSkillName}?',
+          },
+        ],
+        task: {
+          name: `${providerSkillID}.${providerTaskName}`,
+          version: '1',
+          input: {
+            lowerLimit: 1,
+            upperLimit: 10,
+          },
+        },
       },
       notificationConfig: {
         playAudible: true,
@@ -73,8 +110,9 @@ const SetTimerIntentHandler = {
     const localizer = handlerInput.responseBuilder.i18n;
     const duration = Alexa.getSlotValue(requestEnvelope, 'duration') || 'PT45S'; // ISO-8601 representation of duration
 
-    const timerRequest = getAnnouceTimer(duration);
+    // const timerRequest = getAnnouceTimer(duration);
     // const timerRequest = getNotifyOnlyTimer(duration);
+    const timerRequest = getLaunchTaskTimer(duration);
 
     console.log(`About to create timer: ${JSON.stringify(timerRequest)}`);
 
