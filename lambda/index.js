@@ -269,6 +269,7 @@ const MoreTimeIntentHandler = {
     if (Permission && Permission.includes(PermissionNames.SkillResumption)) {
       speakOutput = 'Ok, I will be back in 50 seconds.';
     } else {
+      speakOutput = 'Ok, need your voice permission first.';
       const voicePermissionSkillResumption = {
         type: 'Connections.SendRequest',
         name: 'AskFor',
@@ -281,6 +282,7 @@ const MoreTimeIntentHandler = {
       };
 
       return responseBuilder
+        .speak(speakOutput)
         .addDirective(voicePermissionSkillResumption)
         .withShouldEndSession(undefined)
         .getResponse();
