@@ -41,6 +41,15 @@ const dbPersistenceAdapter = new DynamoDbPersistenceAdapter({
   dynamoDBClient: dynamoDB,
 });
 
+const PermissionNames = Object.freeze(
+  {
+    SkillResumption: 'alexa::skill:resumption',
+    SkillResumptionConsentCard: ['alexa::skill:resumption'],
+    SkillReminder: 'alexa::alerts:reminders:skill:readwrite',
+    SkillTimer: 'alexa::alerts:timers:skill:readwrite',
+  },
+);
+
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return (
@@ -255,21 +264,30 @@ const MoreTimeIntentHandler = {
 
     const persistentAttributes = await attributesManager.getPersistentAttributes();
     const { Permission } = persistentAttributes;
-    const PermissionNames = Object.freeze(
-      {
-        SkillResumption: 'alexa::skill:resumption',
-        SkillResumptionConsentCard: ['alexa::skill:resumption'],
-      },
-    );
 
     // prompt user for permission
     if (Permission && Permission.includes(PermissionNames.SkillResumption)) {
       speakOutput = 'Ok, I will be back in 50 seconds.';
     } else {
-      speakOutput = "Ok, be back in 50 seconds. If you haven't done so, go to Alexa app now to grant resupmtion permission to the skill";
-      handlerInput.responseBuilder.withAskForPermissionsConsentCard(PermissionNames.SkillResumptionConsentCard);
-      const event = { eventName: 'PROMPT_PERMISSION', eventLabel: 'APP', eventValue: `${PermissionNames.SkillResumption}` };
-      console.log(`${JSON.stringify(event)}`);
+      const voicePermissionSkillResumption = {
+        type: 'Connections.SendRequest',
+        name: 'AskFor',
+        payload: {
+          '@type': 'AskForPermissionsConsentRequest',
+          '@version': '1',
+          permissionScope: PermissionNames.SkillResumption,
+        },
+        token: 'alexa_skill_resumption_api',
+      };
+
+      return responseBuilder
+        .addDirective(voicePermissionSkillResumption)
+        .withShouldEndSession(undefined)
+        .getResponse();
+      // speakOutput = "Ok, be back in 50 seconds. If you haven't done so, go to Alexa app now to grant resupmtion permission to the skill";
+      // handlerInput.responseBuilder.withAskForPermissionsConsentCard(PermissionNames.SkillResumptionConsentCard);
+      // const event = { eventName: 'PROMPT_PERMISSION', eventLabel: 'APP', eventValue: `${PermissionNames.SkillResumption}` };
+      // console.log(`${JSON.stringify(event)}`);
     }
 
     // save sessionID for resumpton
@@ -374,19 +392,36 @@ const VoicePermissionsRequestHandler = {
   canHandle(handlerInput) {
     const { request } = handlerInput.requestEnvelope;
     return request.type === RequestTypes.ConnectionsResponse
-            && request.token === 'alexa_reminder_api';
+            && (
+              request.token === 'alexa_reminder_api'
+              || request.token === 'alexa_skill_resumption_api'
+            );
   },
   async handle(handlerInput) {
     const { responseBuilder } = handlerInput;
     const { status } = handlerInput.requestEnvelope.request.payload;
     const { code } = handlerInput.requestEnvelope.request.status;
     console.log(`Connections.Response received status code : ${code} and status : ${status}`);
+    const { attributesManager } = handlerInput;
+    const persistentAttributes = await attributesManager.getPersistentAttributes();
+    persistentAttributes.Permission = persistentAttributes.Permission || [];
 
     let speechOutput = '';
 
     switch (status) {
       case VoicePermissionStatus.Accepted:
-        return SetReminderTaskHandler.handle(handlerInput);
+        if (handlerInput.requestEnvelope.request.token === 'alexa_reminder_api') {
+          persistentAttributes.Permission.push(PermissionNames.SkillReminder);
+          attributesManager.setPersistentAttributes(persistentAttributes);
+          await attributesManager.savePersistentAttributes();
+          return SetReminderTaskHandler.handle(handlerInput);
+        } if (handlerInput.requestEnvelope.request.token === 'alexa_skill_resumption_api') {
+          persistentAttributes.Permission.push(PermissionNames.SkillResumption);
+          attributesManager.setPersistentAttributes(persistentAttributes);
+          await attributesManager.savePersistentAttributes();
+          return MoreTimeIntentHandler.handle(handlerInput);
+        }
+        break;
       case VoicePermissionStatus.Denied:
         speechOutput = responseBuilder.i18n.s('reminderDenied');
         break;

@@ -5,6 +5,15 @@
 const Alexa = require('ask-sdk-core');
 const { SkillResumptionAPIManager } = require('./APIManager');
 
+const PermissionNames = Object.freeze(
+  {
+    SkillResumption: 'alexa::skill:resumption',
+    SkillResumptionConsentCard: ['alexa::skill:resumption'],
+    SkillReminder: 'alexa::alerts:reminders:skill:readwrite',
+    SkillTimer: 'alexa::alerts:timers:skill:readwrite',
+  },
+);
+
 function getRandomString(strings) {
   return strings[Math.floor(Math.random() * strings.length)];
 }
@@ -149,6 +158,7 @@ async function BackgroundSkillHandler(handlerInput) {
 async function ForegroundSkillHandler(handlerInput) {
   const { attributesManager } = handlerInput;
   const persistentAttributes = await attributesManager.getPersistentAttributes();
+  const permission = persistentAttributes.Permission || [];
 
   try {
     const { sessionId } = persistentAttributes;
@@ -160,6 +170,9 @@ async function ForegroundSkillHandler(handlerInput) {
 
     // Detect 401 and remove manually user permission
     if (error.message && error.message.includes('401')) {
+      persistentAttributes.Permission = permission.filter((ele) => ele !== PermissionNames.SkillResumption);
+      attributesManager.setPersistentAttributes(persistentAttributes);
+      await attributesManager.savePersistentAttributes();
       console.error(`Likely user revoked skill resumption permission: ${error}`);
     }
 

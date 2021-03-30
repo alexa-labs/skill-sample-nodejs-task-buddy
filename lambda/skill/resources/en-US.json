@@ -25,7 +25,7 @@
   "reminderText": "Task Buddy: It's time to grab coffee and take a walk!",
   "reminderSSML": "<speak>It's time to grab coffee and take a walk!</speak>",
   "reminderDenied": "What else can I help you with?",
-  "reminderNotAnswered": "Sorry, I need your permissions to create reminders.",
+  "reminderNotAnswered": "Sorry, I need your permissions to create reminders or resume skills.",
   "reminderConsentCardMessage": "We need you to enable reminders. I just sent the request to your alexa app.",
   "ANNOUNCEMENT_TIMER_TITLE_MSG": "My Announcement Timer",
   "ANNOUNCEMENT_LOCALE_MSG": "en-US",
