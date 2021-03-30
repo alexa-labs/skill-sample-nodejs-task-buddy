@@ -252,7 +252,10 @@ const StillHereIntentHandler = {
 const MoreTimeIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-          && handlerInput.requestEnvelope.request.intent.name === 'MoreTimeIntent';
+          && (
+            handlerInput.requestEnvelope.request.intent.name === 'MoreTimeIntent'
+            || handlerInput.requestEnvelope.request.intent.name === 'BackgroundSkillIntent'
+          );
   },
   async handle(handlerInput) {
     const { responseBuilder } = handlerInput;
@@ -267,7 +270,24 @@ const MoreTimeIntentHandler = {
 
     // prompt user for permission
     if (Permission && Permission.includes(PermissionNames.SkillResumption)) {
-      speakOutput = 'Ok, I will be back in 50 seconds.';
+      if (handlerInput.requestEnvelope.request.intent.name === 'MoreTimeIntent') {
+        speakOutput = 'Ok, I will be back in 50 seconds.';
+        const audioDirective = {
+          type: 'AudioPlayer.Play',
+          playBehavior: 'REPLACE_ALL',
+          audioItem: {
+            stream: {
+              token: 'token',
+              url: 'https://aplsnippets.s3.amazonaws.com/assets/audio/snoring_adult.mp3',
+              offsetInMilliseconds: 0,
+            },
+          },
+        };
+
+        responseBuilder.addDirective(audioDirective);
+      } else {
+        speakOutput = 'Ok, the skill is now backgrounded. Use the external script to foreground the skill.';
+      }
     } else {
       speakOutput = 'Ok, need your voice permission first.';
       const voicePermissionSkillResumption = {
@@ -297,24 +317,11 @@ const MoreTimeIntentHandler = {
     attributesManager.setPersistentAttributes(persistentAttributes);
     await attributesManager.savePersistentAttributes();
 
-    const audioDirective = {
-      type: 'AudioPlayer.Play',
-      playBehavior: 'REPLACE_ALL',
-      audioItem: {
-        stream: {
-          token: 'token',
-          url: 'https://aplsnippets.s3.amazonaws.com/assets/audio/snoring_adult.mp3',
-          offsetInMilliseconds: 0,
-        },
-      },
-    };
-
     // background the skill
     Utils.BackgroundSkillHandler(handlerInput);
 
     return responseBuilder
       .speak(speakOutput)
-      .addDirective(audioDirective)
       .getResponse();
   },
 };
