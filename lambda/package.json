@@ -9,10 +9,12 @@
 	"author": "Amazon Alexa",
 	"license": "ISC",
 	"dependencies": {
+		"ask-sdk-dynamodb-persistence-adapter": "^2.9.0",
 		"ask-sdk-core": "^2.8.0",
 		"ask-sdk-model": "^1.28.0",
 		"aws-sdk": "^2.7.0",
-		"moment-timezone": "^0.5.31"
+		"moment-timezone": "^0.5.31",
+		"only": "0.0.2"
 	},
 	"devDependencies": {
 		"eslint": "^7.2.0",

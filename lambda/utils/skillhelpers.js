@@ -3,6 +3,7 @@
 // Licensed under the Amazon Software License  http://aws.amazon.com/asl/
 
 const Alexa = require('ask-sdk-core');
+const { SkillResumptionAPIManager } = require('./APIManager');
 
 function getRandomString(strings) {
   return strings[Math.floor(Math.random() * strings.length)];
@@ -126,6 +127,49 @@ function createAPLDocDirective(doc, datasource, token) {
   return directive;
 }
 
+function enableSetSessionState(handlerInput) {
+  const { responseBuilder } = handlerInput;
+  const response = responseBuilder.getResponse();
+  responseBuilder.withSessionBehavior = (state) => {
+    response.sessionBehavior = {
+      type: 'SetSessionState',
+      state,
+    };
+    return responseBuilder;
+  };
+}
+
+async function BackgroundSkillHandler(handlerInput) {
+  // Creates a withSessionBehavior function for responseBuilder
+  enableSetSessionState(handlerInput);
+
+  handlerInput.responseBuilder.withSessionBehavior('BACKGROUNDED');
+}
+
+async function ForegroundSkillHandler(handlerInput) {
+  const { attributesManager } = handlerInput;
+  const persistentAttributes = await attributesManager.getPersistentAttributes();
+
+  try {
+    const { sessionId } = persistentAttributes;
+    const { apiAccessToken } = handlerInput.requestEnvelope.context.System;
+    const token = apiAccessToken || await SkillResumptionAPIManager.getToken();
+    await SkillResumptionAPIManager.postRequest(sessionId, token);
+  } catch (error) {
+    console.error(`ForegroundSkillHandler: Error occurred when calling Skill Resumption API -> ${error}`);
+
+    // Detect 401 and remove manually user permission
+    if (error.message && error.message.includes('401')) {
+      console.error(`Likely user revoked skill resumption permission: ${error}`);
+    }
+
+    return handlerInput.responseBuilder.getResponse();
+  }
+
+  // NOTE: Don't need to foreground skill so just return empty
+  return handlerInput.responseBuilder.getResponse();
+}
+
 module.exports = {
   Utils: {
     getRandomString,
@@ -138,5 +182,7 @@ module.exports = {
     Environment,
     getSlotValueId,
     createAPLDocDirective,
+    BackgroundSkillHandler,
+    ForegroundSkillHandler,
   },
 };

@@ -86,6 +86,134 @@
                         "Debug {TaskName}",
                         "Test {TaskName}"
                     ]
+                },
+                {
+                    "name": "SwitchStationIntent",
+                    "slots": [],
+                    "samples": [
+                        "new body",
+                        "new buddy",
+                        "I'd like to change audio",
+                        "I'd like to switch audios",
+                        "I'd like a different audio",
+                        "i'd like another audio",
+                        "let's switch audio",
+                        "let's change audio",
+                        "different audio",
+                        "try another audio",
+                        "switch the audio",
+                        "switch the station",
+                        "try another station",
+                        "different station",
+                        "let's change stations",
+                        "let's switch stations",
+                        "I'd like another station",
+                        "I'd like a different station",
+                        "I'd like to switch stations",
+                        "I'd like to change stations",
+                        "change audio",
+                        "switch audio",
+                        "change station",
+                        "switch station",
+                        "switch stations"
+                    ]
+                },
+                {
+                    "name": "AudioPlayerIntent",
+                    "slots": [],
+                    "samples": [
+                        "get me music",
+                        "get me some music",
+                        "music please",
+                        "music",
+                        "play music"
+                    ]
+                },
+                {
+                    "name": "AMAZON.YesIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NoIntent",
+                    "samples": []
+                },
+                {
+                    "name": "SetTimerIntent",
+                    "slots": [
+                        {
+                            "name": "duration",
+                            "type": "AMAZON.DURATION",
+                            "samples": [
+                                "thirty second",
+                                "sixty second",
+                                "twenty second"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "start cooking for {duration}",
+                        "start cooking",
+                        "set a timer for {duration}",
+                        "set {duration} timer",
+                        "set timer for {duration} second",
+                        "create timer",
+                        "set timer",
+                        "set a timer"
+                    ]
+                },
+                {
+                    "name": "ReadTimerIntent",
+                    "slots": [],
+                    "samples": [
+                        "check timer",
+                        "read timer"
+                    ]
+                },
+                {
+                    "name": "DeleteTimerIntent",
+                    "slots": [],
+                    "samples": [
+                        "delete timer"
+                    ]
+                },
+                {
+                    "name": "StillHereIntent",
+                    "slots": [],
+                    "samples": [
+                        "still there",
+                        "are you still there",
+                        "still here"
+                    ]
+                },
+                {
+                    "name": "ReadyIntent",
+                    "slots": [],
+                    "samples": [
+                        "let's continue",
+                        "resume cooking",
+                        "i'm ready to resume",
+                        "i'm ready to continue",
+                        "i'd like to continue",
+                        "let's keep playing",
+                        "let's resume please",
+                        "let's resume playing",
+                        "let's resume",
+                        "next step",
+                        "resume playing",
+                        "resume",
+                        "i'm back",
+                        "i'm ready",
+                        "continue"
+                    ]
+                },
+                {
+                    "name": "MoreTimeIntent",
+                    "slots": [],
+                    "samples": [
+                        "background the skill",
+                        "give me a second",
+                        "I need more time"
+                    ]
                 }
             ],
             "types": [
@@ -117,6 +245,38 @@
                     ]
                 }
             ]
-        }
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "SetTimerIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "duration",
+                            "type": "AMAZON.DURATION",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.253944620648.1255525876240"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.253944620648.1255525876240",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "for how many seconds?"
+                    }
+                ]
+            }
+        ]
     }
 }

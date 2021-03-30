@@ -6,7 +6,7 @@
   "helpMessageSSML": "<speak>The skill can perform tasks or launch connections to other skills <break strength=\"strong\"/>To start, just say set reminder, check status, play sound, or count down.</speak>",
   "fallbackMessageSSML": "<speak>The skill can perform tasks or launch connections to other provider skills <break strength=\"strong\"/>What would you like to try?</speak>",
   "errorMessage": "Sorry, I had trouble doing what you asked. Please try again.",
-  "sessionResumedMessage": "Welcome back to Task Buddy! You can say set reminder, play sound, check status, or count down.",
+  "sessionResumedMessage": "Welcome back to Task Buddy! You can say set reminder, play sound, check status, or count down. What do you want to do?",
   "cheerSoundSSMLAudio": "<audio src=\"soundbank://soundlibrary/human/amzn_sfx_large_crowd_cheer_02\"/>",
   "checkingStatus": "Checking {taskCategory} status...initiating skill connection...",
   "streamingAudio": "Streaming a long form audio.",

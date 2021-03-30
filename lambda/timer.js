@@ -80,7 +80,7 @@ function getLaunchTaskTimer(duration) {
         textToConfirm: [
           {
             locale: 'en-US',
-            text: 'Your Cooking Disney Churro timer is up! Would you like to launch {continueWithSkillName}?',
+            text: 'Your Cooking Disney Churro timer is up! Would you like to {continueWithSkillName} and try another custom task?',
           },
         ],
         task: {

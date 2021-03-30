@@ -7,7 +7,9 @@
 // This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK (v2).
 // Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
 // session persistence, api calls, and more.
+const AWS = require('aws-sdk');
 const Alexa = require('ask-sdk-core');
+const { DynamoDbPersistenceAdapter } = require('ask-sdk-dynamodb-persistence-adapter');
 const moment = require('moment-timezone');
 const { Utils } = require('./utils/skillhelpers');
 const { localeInterceptor } = require('./utils/i18nhelper');
@@ -20,6 +22,24 @@ const {
 } = require('./directives');
 const VisualInterface = require('./skill/visualInterface');
 const { AlexaTimer } = require('./timer');
+const { AudioPlayerHandler } = require('./utils/AudioPlayer');
+
+if (process.env.DEBUG === 'true' && process.env.AWSPROFILE !== undefined && process.env.AWSPROFILE !== '') {
+  const userCredentials = new AWS.SharedIniFileCredentials({ profile: process.env.AWSPROFILE });
+  const AWSCONFIG = {
+    credentials: userCredentials,
+    region: process.env.AWSREGION || 'us-east-1',
+  };
+  AWS.config.update(AWSCONFIG);
+}
+
+const tableName = (process.env.TABLENAME !== undefined) ? process.env.TABLENAME : 'task-buddy-prod';
+const dynamoDB = new AWS.DynamoDB();
+const dbPersistenceAdapter = new DynamoDbPersistenceAdapter({
+  tableName,
+  createTable: true,
+  dynamoDBClient: dynamoDB,
+});
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -216,6 +236,65 @@ const StillHereIntentHandler = {
     return responseBuilder
       .speak(speakOutput)
       .reprompt(repromptOutput)
+      .getResponse();
+  },
+};
+
+const MoreTimeIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+          && handlerInput.requestEnvelope.request.intent.name === 'MoreTimeIntent';
+  },
+  async handle(handlerInput) {
+    const { responseBuilder } = handlerInput;
+    const { attributesManager } = handlerInput;
+
+    let speakOutput = '';
+
+    // VisualInterface.appendAPLDirective(handlerInput, 'MoreTimeIntent');
+
+    const persistentAttributes = await attributesManager.getPersistentAttributes();
+    const { Permission } = persistentAttributes;
+    const PermissionNames = Object.freeze(
+      {
+        SkillResumption: 'alexa::skill:resumption',
+        SkillResumptionConsentCard: ['alexa::skill:resumption'],
+      },
+    );
+
+    // prompt user for permission
+    if (Permission && Permission.includes(PermissionNames.SkillResumption)) {
+      speakOutput = 'Ok, I will be back in 50 seconds.';
+    } else {
+      speakOutput = "Ok, be back in 50 seconds. If you haven't done so, go to Alexa app now to grant resupmtion permission to the skill";
+      handlerInput.responseBuilder.withAskForPermissionsConsentCard(PermissionNames.SkillResumptionConsentCard);
+      const event = { eventName: 'PROMPT_PERMISSION', eventLabel: 'APP', eventValue: `${PermissionNames.SkillResumption}` };
+      console.log(`${JSON.stringify(event)}`);
+    }
+
+    // save sessionID for resumpton
+    persistentAttributes.sessionId = handlerInput.requestEnvelope.session.sessionId;
+    attributesManager.setPersistentAttributes(persistentAttributes);
+    await attributesManager.savePersistentAttributes();
+
+    const audioDirective = {
+      type: 'AudioPlayer.Play',
+      playBehavior: 'REPLACE_ALL',
+      audioItem: {
+        stream: {
+          token: 'token',
+          url: 'https://aplsnippets.s3.amazonaws.com/assets/audio/snoring_adult.mp3',
+          offsetInMilliseconds: 0,
+        },
+      },
+    };
+
+    // background the skill
+    Utils.BackgroundSkillHandler(handlerInput);
+
+    return responseBuilder
+      .speak(speakOutput)
+      .addDirective(audioDirective)
       .getResponse();
   },
 };
@@ -555,6 +634,7 @@ customSkill.addRequestHandlers(
   TrackMarketingTaskHandler,
   StillHereIntentHandler,
   SetReminderTaskHandler,
+  MoreTimeIntentHandler,
   AlexaTimer.SetTimerIntentHandler,
   AlexaTimer.ReadTimerIntentHandler,
   AlexaTimer.DeleteTimerIntentHandler,
@@ -562,6 +642,13 @@ customSkill.addRequestHandlers(
   AlexaTimer.ResumeTimerIntentHandler,
   AlexaTimer.VoicePermissionsTimerRequestHandler,
   AlexaTimer.AuthorizationGrantRequestHandler,
+  AudioPlayerHandler.PlaybackFailedHandler,
+  AudioPlayerHandler.PlaybackStartedHandler,
+  AudioPlayerHandler.PlaybacNearlyFinishedHandler,
+  AudioPlayerHandler.PlaybackFinishedHandler,
+  AudioPlayerHandler.PlaybackStoppedHandler,
+  AudioPlayerHandler.PlaybackControllerNextCommandHandler,
+  AudioPlayerHandler.PlaybackControllerPreviousCommandHandler,
   PlaySoundTaskHandler,
   CountDownTaskHandler,
   AudioPlayerHandlers,
@@ -569,7 +656,8 @@ customSkill.addRequestHandlers(
 )
   .withApiClient(new Alexa.DefaultApiClient())
   .addErrorHandlers(ErrorHandler)
-  .addRequestInterceptors(localeInterceptor);
+  .addRequestInterceptors(localeInterceptor)
+  .withPersistenceAdapter(dbPersistenceAdapter);
 
 if (Utils.Environment.isDebug) {
   customSkill.addRequestHandlers(
