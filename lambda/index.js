@@ -314,6 +314,7 @@ const MoreTimeIntentHandler = {
 
     // save sessionID for resumpton
     persistentAttributes.sessionId = handlerInput.requestEnvelope.session.sessionId;
+    persistentAttributes.apiAccessToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
     attributesManager.setPersistentAttributes(persistentAttributes);
     await attributesManager.savePersistentAttributes();
 
